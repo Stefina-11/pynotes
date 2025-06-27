@@ -58,6 +58,67 @@
 <div class="highlight"><pre><span></span><code>Hello World
 </code></pre></div>
 
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">n_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter number of elements: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">n_input</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No input provided for number of elements.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>  
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_input</span><span class="p">)</span>  
+        <span class="n">arr_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter the array elements separated by space: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">arr_input</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No array elements provided.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">arr_input</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;You entered </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span><span class="si">}</span><span class="s2"> elements, but expected </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">max_ending_here</span> <span class="o">=</span> <span class="n">max_so_far</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">max_ending_here</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">max_ending_here</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+            <span class="n">max_so_far</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_so_far</span><span class="p">,</span> <span class="n">max_ending_here</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum Subarray Sum:&quot;</span><span class="p">,</span> <span class="n">max_so_far</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">ve</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid input! Please enter integers only.&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error details:&quot;</span><span class="p">,</span> <span class="n">ve</span><span class="p">)</span>
+<span class="n">solve</span><span class="p">()</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter number of elements:  2
+Enter the array elements separated by space:  10 10
+
+
+Maximum Subarray Sum: 20
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">bisect</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">arr_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">arr_input</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">arr_input</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">arr</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">bisect</span><span class="o">.</span><span class="n">bisect_left</span><span class="p">(</span><span class="n">sub</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub</span><span class="p">):</span>
+                <span class="n">sub</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sub</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">num</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sub</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid input&quot;</span><span class="p">)</span>
+<span class="n">solve</span><span class="p">()</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code> 10 9 2 5 3 7 101 18
+
+
+4
+</code></pre></div>
+
 <div class="highlight"><pre><span></span><code>
 </code></pre></div>
 
