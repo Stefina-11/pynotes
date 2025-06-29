@@ -777,11 +777,953 @@ F1-score Point : 92.31
 </code></pre></div>
 
 <p><img alt="png" src="/pynotes/images/test_1_22_1.png"></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;heart.csv&quot;</span><span class="p">)</span>  
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;TARGET&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;TARGET&quot;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">output_dict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">prec</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;precision&#39;</span><span class="p">]</span>
+<span class="n">rec</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;recall&#39;</span><span class="p">]</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;f1-score&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Performance Points&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy Point : </span><span class="si">{</span><span class="n">acc</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Precision Point: </span><span class="si">{</span><span class="n">prec</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recall Point   : </span><span class="si">{</span><span class="n">rec</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;F1-score Point : </span><span class="si">{</span><span class="n">f1</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Actual&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Confusion Matrix&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Performance Points
+Accuracy Point : 82.42
+Precision Point: 84.00
+Recall Point   : 84.00
+F1-score Point : 84.00
+</code></pre></div>
+
+<p><img alt="png" src="/pynotes/images/test_1_23_1.png"></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;diabetes.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;OUTCOME&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;OUTCOME&quot;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">output_dict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">prec</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;precision&#39;</span><span class="p">]</span>
+<span class="n">rec</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;recall&#39;</span><span class="p">]</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;f1-score&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Performance Points&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy Point : </span><span class="si">{</span><span class="n">acc</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Precision Point: </span><span class="si">{</span><span class="n">prec</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recall Point   : </span><span class="si">{</span><span class="n">rec</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;F1-score Point : </span><span class="si">{</span><span class="n">f1</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Purples&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Actual&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Confusion Matrix&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Performance Points
+Accuracy Point : 75.32
+Precision Point: 63.86
+Recall Point   : 66.25
+F1-score Point : 65.03
+</code></pre></div>
+
+<p><img alt="png" src="/pynotes/images/test_1_24_1.png"></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;breast_cancer.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;DIAGNOSIS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;DIAGNOSIS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">infer_objects</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;DIAGNOSIS&quot;</span><span class="p">,</span> <span class="s2">&quot;ID&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;DIAGNOSIS&quot;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">output_dict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">prec</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;precision&#39;</span><span class="p">]</span>
+<span class="n">rec</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;recall&#39;</span><span class="p">]</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;f1-score&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Performance Points&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy Point : </span><span class="si">{</span><span class="n">acc</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Precision Point: </span><span class="si">{</span><span class="n">prec</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recall Point   : </span><span class="si">{</span><span class="n">rec</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;F1-score Point : </span><span class="si">{</span><span class="n">f1</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Reds&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Actual&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Confusion Matrix&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Performance Points
+Accuracy Point : 97.08
+Precision Point: 98.33
+Recall Point   : 93.65
+F1-score Point : 95.93
+</code></pre></div>
+
+<p><img alt="png" src="/pynotes/images/test_1_25_1.png"></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;kidney_disease.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span>
+    <span class="s1">&#39;yes&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;normal&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;abnormal&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;present&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;notpresent&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;ckd&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;notckd&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;CKD&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;NOTCKD&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;good&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;poor&#39;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;ID&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;CLASSIFICATION&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;CLASSIFICATION&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;CLASSIFICATION&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;CLASSIFICATION&quot;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">output_dict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">prec</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;precision&#39;</span><span class="p">]</span>
+<span class="n">rec</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;recall&#39;</span><span class="p">]</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;f1-score&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Performance Points&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy Point : </span><span class="si">{</span><span class="n">acc</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Precision Point: </span><span class="si">{</span><span class="n">prec</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recall Point   : </span><span class="si">{</span><span class="n">rec</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;F1-score Point : </span><span class="si">{</span><span class="n">f1</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;YlGn&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Actual&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Confusion Matrix&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Performance Points
+Accuracy Point : 100.00
+Precision Point: 100.00
+Recall Point   : 100.00
+F1-score Point : 100.00
+</code></pre></div>
+
+<p><img alt="png" src="/pynotes/images/test_1_26_1.png"></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;parkinsons.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># status = 1 (Parkinson&#39;s), 0 (Healthy)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">output_dict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">prec</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;precision&#39;</span><span class="p">]</span>
+<span class="n">rec</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;recall&#39;</span><span class="p">]</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;f1-score&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Performance Points&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy Point : </span><span class="si">{</span><span class="n">acc</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Precision Point: </span><span class="si">{</span><span class="n">prec</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recall Point   : </span><span class="si">{</span><span class="n">rec</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;F1-score Point : </span><span class="si">{</span><span class="n">f1</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Oranges&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Actual&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Confusion Matrix&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Performance Points
+Accuracy Point : 93.22
+Precision Point: 93.48
+Recall Point   : 97.73
+F1-score Point : 95.56
+</code></pre></div>
+
+<p><img alt="png" src="/pynotes/images/test_1_27_1.png"></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;COVID19_symptoms.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span>
+    <span class="s1">&#39;YES&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;NO&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;NONE&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;GOOD&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;POOR&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;FEMALE&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;MALE&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;TRANSGENDER&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;DON&#39;T-KNOW&quot;</span><span class="p">:</span> <span class="mi">2</span>
+<span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;COUNTRY&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">encode_severity</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;SEVERITY_NONE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;SEVERITY_MILD&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;SEVERITY_MODERATE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">2</span>
+    <span class="k">elif</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;SEVERITY_SEVERE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">3</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>  
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;SEVERITY_LABEL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">encode_severity</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;SEVERITY_NONE&#39;</span><span class="p">,</span> <span class="s1">&#39;SEVERITY_MILD&#39;</span><span class="p">,</span> <span class="s1">&#39;SEVERITY_MODERATE&#39;</span><span class="p">,</span> <span class="s1">&#39;SEVERITY_SEVERE&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;SEVERITY_LABEL&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;SEVERITY_LABEL&quot;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">output_dict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Performance Metrics&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">acc</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">report</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Class </span><span class="si">{</span><span class="bp">cls</span><span class="si">}</span><span class="s2">: Precision </span><span class="si">{</span><span class="n">report</span><span class="p">[</span><span class="bp">cls</span><span class="p">][</span><span class="s1">&#39;precision&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%, Recall </span><span class="si">{</span><span class="n">report</span><span class="p">[</span><span class="bp">cls</span><span class="p">][</span><span class="s1">&#39;recall&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%, F1 </span><span class="si">{</span><span class="n">report</span><span class="p">[</span><span class="bp">cls</span><span class="p">][</span><span class="s1">&#39;f1-score&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted Severity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Actual Severity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Confusion Matrix - COVID Severity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Performance Metrics
+Accuracy: 13.15%
+Class 1: Precision 13.21%, Recall 12.83%, F1 13.02%
+Class 2: Precision 13.19%, Recall 12.76%, F1 12.97%
+Class 3: Precision 12.98%, Recall 13.40%, F1 13.18%
+</code></pre></div>
+
+<p><img alt="png" src="/pynotes/images/test_1_28_1.png"></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;survey.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;Age&quot;</span><span class="p">,</span> <span class="s2">&quot;Gender&quot;</span><span class="p">,</span> <span class="s2">&quot;family_history&quot;</span><span class="p">,</span> <span class="s2">&quot;benefits&quot;</span><span class="p">,</span> <span class="s2">&quot;care_options&quot;</span><span class="p">,</span> <span class="s2">&quot;seek_help&quot;</span><span class="p">,</span> <span class="s2">&quot;mental_health_consequence&quot;</span><span class="p">]]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">clean_gender</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="s2">&quot;male&quot;</span> <span class="ow">in</span> <span class="n">g</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="s2">&quot;female&quot;</span> <span class="ow">in</span> <span class="n">g</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">2</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;Gender&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Gender&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">clean_gender</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span>
+    <span class="s2">&quot;Yes&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;No&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;Don&#39;t know&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Not sure&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Maybe&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;Some of them&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Not available&quot;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;mental_health_consequence&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;mental_health_consequence&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span>
+    <span class="s2">&quot;Yes&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;No&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;Maybe&quot;</span><span class="p">:</span> <span class="mi">1</span>   <span class="c1"># Treat &quot;Maybe&quot; as potential consequence</span>
+<span class="p">})</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;mental_health_consequence&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;mental_health_consequence&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;mental_health_consequence&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;mental_health_consequence&quot;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">output_dict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mental Health Classification&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy       : </span><span class="si">{</span><span class="n">acc</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Precision (Yes): </span><span class="si">{</span><span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;precision&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recall (Yes)   : </span><span class="si">{</span><span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;recall&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;F1-score (Yes) : </span><span class="si">{</span><span class="n">report</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">][</span><span class="s1">&#39;f1-score&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Oranges&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Actual&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Confusion Matrix - Mental Health Impact&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>📊 Mental Health Classification
+✅ Accuracy       : 35.71%
+🎯 Precision (Yes): 34.29%
+🔁 Recall (Yes)   : 23.08%
+📌 F1-score (Yes) : 27.59%
+</code></pre></div>
+
+<p><img alt="png" src="/pynotes/images/test_1_29_1.png"></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;stock_data.csv&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Columns in CSV:&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="n">date_col</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;date&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> <span class="s1">&#39;time&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+<span class="k">if</span> <span class="n">date_col</span><span class="p">:</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">date_col</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">stock_col</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">&#39;number&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="n">stock_col</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">data</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">stock_col</span><span class="p">:</span> <span class="s2">&quot;Close&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;Target&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Close&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;Close&quot;</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Target&quot;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;RMSE: </span><span class="si">{</span><span class="n">rmse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R² Score: </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Actual&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Predicted&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stock_col</span><span class="si">}</span><span class="s2"> - Next Day Price Prediction&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Price&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Columns in CSV: [&#39;Unnamed: 0&#39;, &#39;Stock_1&#39;, &#39;Stock_2&#39;, &#39;Stock_3&#39;, &#39;Stock_4&#39;, &#39;Stock_5&#39;]
+RMSE: 0.98
+R² Score: 0.96
+</code></pre></div>
+
+<p><img alt="png" src="/pynotes/images/test_1_30_1.png"></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;stock_data.csv&quot;</span><span class="p">)</span>
+<span class="n">date_col</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;date&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> <span class="s1">&#39;time&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+<span class="k">if</span> <span class="n">date_col</span><span class="p">:</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">date_col</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">stock_col</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">&#39;number&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="n">stock_col</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">stock_col</span><span class="p">:</span> <span class="s2">&quot;Close&quot;</span><span class="p">})</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;MA_5&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Close&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;MA_10&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Close&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;Daily_Return&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Close&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;Target&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Close&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Predict next day&#39;s price</span>
+<span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;Close&quot;</span><span class="p">,</span> <span class="s2">&quot;MA_5&quot;</span><span class="p">,</span> <span class="s2">&quot;MA_10&quot;</span><span class="p">,</span> <span class="s2">&quot;Daily_Return&quot;</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Target&quot;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; RMSE: </span><span class="si">{</span><span class="n">rmse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; R² Score: </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Actual&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Predicted&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Stock Price Prediction with Moving Averages&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Price&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code> RMSE: 2.13
+ R² Score: 0.79
+</code></pre></div>
+
+<p><img alt="png" src="/pynotes/images/test_1_31_1.png"></p>
+<div class="highlight"><pre><span></span><code><span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Toronto&#39;</span><span class="p">,</span> <span class="s1">&#39;Montreal&#39;</span><span class="p">,</span> <span class="s1">&#39;Waterloo&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;points&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">+=</span> <span class="mi">40</span>  
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">score</span> <span class="o">+=</span> <span class="mi">40</span> 
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">10</span>
+<span class="n">score</span> <span class="o">+=</span> <span class="mi">40</span>  
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_age</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">d1</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">months</span> <span class="o">=</span> <span class="p">(</span><span class="n">d1</span><span class="o">.</span><span class="n">year</span> <span class="o">-</span> <span class="n">d</span><span class="o">.</span><span class="n">year</span><span class="p">)</span> <span class="o">*</span> <span class="mi">12</span> <span class="o">+</span> <span class="n">d1</span><span class="o">.</span><span class="n">month</span> <span class="o">-</span> <span class="n">d</span><span class="o">.</span><span class="n">month</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">months</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">year</span>
+<span class="n">age</span> <span class="o">=</span> <span class="n">get_age</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1991</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">score</span> <span class="o">+=</span> <span class="mi">40</span>  <span class="c1"># Function logic used</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;Pass&#39;</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">90</span> <span class="k">else</span> <span class="s1">&#39;Fail&#39;</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">+=</span> <span class="mi">40</span>  
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Final Score:&quot;</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Final Score: 200
+       city  points  code status
+0   Toronto      90     1   Pass
+1  Montreal      80     2   Fail
+2  Waterloo     100     3   Pass
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;Charlie&#39;</span><span class="p">,</span> <span class="s1">&#39;David&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;marks&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">85</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">74</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_grade</span><span class="p">(</span><span class="n">mark</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">mark</span> <span class="o">&gt;=</span> <span class="mi">90</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;A&#39;</span>
+    <span class="k">elif</span> <span class="n">mark</span> <span class="o">&gt;=</span> <span class="mi">80</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;B&#39;</span>
+    <span class="k">elif</span> <span class="n">mark</span> <span class="o">&gt;=</span> <span class="mi">70</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;C&#39;</span>
+    <span class="k">elif</span> <span class="n">mark</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;D&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;F&#39;</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;grade&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;marks&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_grade</span><span class="p">)</span>
+<span class="n">average_mark</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;marks&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;marks&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;Pass&#39;</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">60</span> <span class="k">else</span> <span class="s1">&#39;Fail&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Average Mark:&quot;</span><span class="p">,</span> <span class="n">average_mark</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>      name  marks grade result
+0    Alice     85     B   Pass
+1      Bob     67     D   Pass
+2  Charlie     90     A   Pass
+3    David     74     C   Pass
+Average Mark: 79.0
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="n">csv_data</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">name,join_date,salary,position</span>
+<span class="s2">Alice,2016-08-01,95000,Manager</span>
+<span class="s2">Bob,2019-07-15,60000,Engineer</span>
+<span class="s2">Charlie,2014-01-10,120000,Director</span>
+<span class="s2">David,2021-03-20,45000,Intern</span>
+<span class="s2">Ella,2018-09-30,70000,Engineer</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_data</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;join_date&#39;</span><span class="p">])</span>
+<span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;experience_years&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;join_date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="p">(</span><span class="n">today</span> <span class="o">-</span> <span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">days</span> <span class="o">//</span> <span class="mi">365</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;salary_after_tax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mf">0.82</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_level</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="n">salary</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">exp</span> <span class="o">&gt;=</span> <span class="mi">8</span> <span class="ow">and</span> <span class="n">salary</span> <span class="o">&gt;</span> <span class="mi">100000</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;Senior Executive&#39;</span>
+    <span class="k">elif</span> <span class="n">exp</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;Experienced&#39;</span>
+    <span class="k">elif</span> <span class="n">exp</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;Mid-Level&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;Junior&#39;</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">get_level</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;experience_years&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">high_performers</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">70000</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;experience_years&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;All Employees:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;High Performers:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">high_performers</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>All Employees:
+       name  join_date  salary  position  experience_years  salary_after_tax  \
+0    Alice 2016-08-01   95000   Manager                 8           77900.0   
+1      Bob 2019-07-15   60000  Engineer                 5           49200.0   
+2  Charlie 2014-01-10  120000  Director                11           98400.0   
+3    David 2021-03-20   45000    Intern                 4           36900.0   
+4     Ella 2018-09-30   70000  Engineer                 6           57400.0
+
+              level  
+0       Experienced  
+1       Experienced  
+2  Senior Executive  
+3         Mid-Level  
+4       Experienced
+
+High Performers:
+       name  join_date  salary  position  experience_years  salary_after_tax  \
+0    Alice 2016-08-01   95000   Manager                 8           77900.0   
+2  Charlie 2014-01-10  120000  Director                11           98400.0
+
+              level  
+0       Experienced  
+2  Senior Executive
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="n">employees</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;emp_id&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">106</span><span class="p">],</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;Charlie&#39;</span><span class="p">,</span> <span class="s1">&#39;David&#39;</span><span class="p">,</span> <span class="s1">&#39;Eva&#39;</span><span class="p">,</span> <span class="s1">&#39;Frank&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;department&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Engineering&#39;</span><span class="p">,</span> <span class="s1">&#39;Engineering&#39;</span><span class="p">,</span> <span class="s1">&#39;HR&#39;</span><span class="p">,</span> <span class="s1">&#39;Finance&#39;</span><span class="p">,</span> <span class="s1">&#39;Finance&#39;</span><span class="p">,</span> <span class="s1">&#39;Engineering&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;join_date&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([</span><span class="s1">&#39;2015-05-21&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-03-15&#39;</span><span class="p">,</span> <span class="s1">&#39;2012-06-30&#39;</span><span class="p">,</span> <span class="s1">&#39;2019-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-11-23&#39;</span><span class="p">,</span> <span class="s1">&#39;2022-05-19&#39;</span><span class="p">]),</span>
+    <span class="s1">&#39;salary&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">90000</span><span class="p">,</span> <span class="mi">72000</span><span class="p">,</span> <span class="mi">60000</span><span class="p">,</span> <span class="mi">65000</span><span class="p">,</span> <span class="mi">58000</span><span class="p">,</span> <span class="mi">50000</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="n">projects</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;project_id&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="s1">&#39;project_name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;Beta&#39;</span><span class="p">,</span> <span class="s1">&#39;Gamma&#39;</span><span class="p">,</span> <span class="s1">&#39;Delta&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;assigned_to&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">102</span><span class="p">],</span> <span class="p">[</span><span class="mi">104</span><span class="p">],</span> <span class="p">[</span><span class="mi">103</span><span class="p">,</span> <span class="mi">105</span><span class="p">],</span> <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">106</span><span class="p">]],</span>
+    <span class="s1">&#39;deadline&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([</span><span class="s1">&#39;2025-12-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2024-11-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-03-15&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-08-30&#39;</span><span class="p">])</span>
+<span class="p">})</span>
+<span class="n">project_long</span> <span class="o">=</span> <span class="n">projects</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="s1">&#39;assigned_to&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;assigned_to&#39;</span><span class="p">:</span> <span class="s1">&#39;emp_id&#39;</span><span class="p">})</span>
+<span class="n">merged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">project_long</span><span class="p">,</span> <span class="n">employees</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;emp_id&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">today</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
+<span class="n">merged</span><span class="p">[</span><span class="s1">&#39;experience_yrs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">today</span> <span class="o">-</span> <span class="n">merged</span><span class="p">[</span><span class="s1">&#39;join_date&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">days</span> <span class="o">//</span> <span class="mi">365</span>
+<span class="n">workload</span> <span class="o">=</span> <span class="n">merged</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;emp_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;project_count&#39;</span><span class="p">)</span>
+<span class="n">merged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">merged</span><span class="p">,</span> <span class="n">workload</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;emp_id&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">conditions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">merged</span><span class="p">[</span><span class="s1">&#39;project_count&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">merged</span><span class="p">[</span><span class="s1">&#39;project_count&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">merged</span><span class="p">[</span><span class="s1">&#39;project_count&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">choices</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Overloaded&#39;</span><span class="p">,</span> <span class="s1">&#39;Balanced&#39;</span><span class="p">,</span> <span class="s1">&#39;Light&#39;</span><span class="p">]</span>
+<span class="n">merged</span><span class="p">[</span><span class="s1">&#39;workload_status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">conditions</span><span class="p">,</span> <span class="n">choices</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;Unassigned&#39;</span><span class="p">)</span>
+<span class="n">department_summary</span> <span class="o">=</span> <span class="n">merged</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">total_employees</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;emp_id&#39;</span><span class="p">,</span> <span class="s1">&#39;nunique&#39;</span><span class="p">),</span>
+    <span class="n">avg_salary</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;salary&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">),</span>
+    <span class="n">total_projects</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;project_id&#39;</span><span class="p">,</span> <span class="s1">&#39;nunique&#39;</span><span class="p">),</span>
+    <span class="n">avg_experience</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;experience_yrs&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">top_employees</span> <span class="o">=</span> <span class="n">merged</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;experience_yrs&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Full Merged Data (Project Assignments + Employees):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">merged</span><span class="p">[[</span><span class="s1">&#39;emp_id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="s1">&#39;project_name&#39;</span><span class="p">,</span> <span class="s1">&#39;workload_status&#39;</span><span class="p">,</span> <span class="s1">&#39;experience_yrs&#39;</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Department Summary:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">department_summary</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Top Experienced Employee per Department:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">top_employees</span><span class="p">[[</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;experience_yrs&#39;</span><span class="p">,</span> <span class="s1">&#39;salary&#39;</span><span class="p">]])</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">Full</span><span class="w"> </span><span class="n">Merged</span><span class="w"> </span><span class="n">Data</span><span class="w"> </span><span class="p">(</span><span class="n">Project</span><span class="w"> </span><span class="n">Assignments</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Employees</span><span class="p">):</span>
+<span class="w">  </span><span class="n">emp_id</span><span class="w">     </span><span class="n">name</span><span class="w">   </span><span class="n">department</span><span class="w"> </span><span class="n">project_name</span><span class="w"> </span><span class="n">workload_status</span><span class="w">  </span><span class="n">experience_yrs</span>
+<span class="mi">0</span><span class="w">    </span><span class="mi">101</span><span class="w">    </span><span class="n">Alice</span><span class="w">  </span><span class="n">Engineering</span><span class="w">        </span><span class="n">Alpha</span><span class="w">        </span><span class="n">Balanced</span><span class="w">              </span><span class="mi">10</span>
+<span class="mi">1</span><span class="w">    </span><span class="mi">102</span><span class="w">      </span><span class="n">Bob</span><span class="w">  </span><span class="n">Engineering</span><span class="w">        </span><span class="n">Alpha</span><span class="w">           </span><span class="n">Light</span><span class="w">               </span><span class="mi">7</span>
+<span class="mi">2</span><span class="w">    </span><span class="mi">104</span><span class="w">    </span><span class="n">David</span><span class="w">      </span><span class="n">Finance</span><span class="w">         </span><span class="n">Beta</span><span class="w">           </span><span class="n">Light</span><span class="w">               </span><span class="mi">6</span>
+<span class="mi">3</span><span class="w">    </span><span class="mi">103</span><span class="w">  </span><span class="n">Charlie</span><span class="w">           </span><span class="n">HR</span><span class="w">        </span><span class="n">Gamma</span><span class="w">           </span><span class="n">Light</span><span class="w">              </span><span class="mi">13</span>
+<span class="mi">4</span><span class="w">    </span><span class="mi">105</span><span class="w">      </span><span class="n">Eva</span><span class="w">      </span><span class="n">Finance</span><span class="w">        </span><span class="n">Gamma</span><span class="w">           </span><span class="n">Light</span><span class="w">               </span><span class="mi">7</span>
+<span class="mi">5</span><span class="w">    </span><span class="mi">101</span><span class="w">    </span><span class="n">Alice</span><span class="w">  </span><span class="n">Engineering</span><span class="w">        </span><span class="n">Delta</span><span class="w">        </span><span class="n">Balanced</span><span class="w">              </span><span class="mi">10</span>
+<span class="mi">6</span><span class="w">    </span><span class="mi">106</span><span class="w">    </span><span class="n">Frank</span><span class="w">  </span><span class="n">Engineering</span><span class="w">        </span><span class="n">Delta</span><span class="w">           </span><span class="n">Light</span><span class="w">               </span><span class="mi">3</span>
+
+<span class="n">Department</span><span class="w"> </span><span class="n">Summary</span><span class="p">:</span>
+<span class="w">    </span><span class="n">department</span><span class="w">  </span><span class="n">total_employees</span><span class="w">  </span><span class="n">avg_salary</span><span class="w">  </span><span class="n">total_projects</span><span class="w">  </span><span class="n">avg_experience</span>
+<span class="mi">0</span><span class="w">  </span><span class="n">Engineering</span><span class="w">                </span><span class="mi">3</span><span class="w">     </span><span class="mf">75500.0</span><span class="w">               </span><span class="mi">2</span><span class="w">             </span><span class="mf">7.5</span>
+<span class="mi">1</span><span class="w">      </span><span class="n">Finance</span><span class="w">                </span><span class="mi">2</span><span class="w">     </span><span class="mf">61500.0</span><span class="w">               </span><span class="mi">2</span><span class="w">             </span><span class="mf">6.5</span>
+<span class="mi">2</span><span class="w">           </span><span class="n">HR</span><span class="w">                </span><span class="mi">1</span><span class="w">     </span><span class="mf">60000.0</span><span class="w">               </span><span class="mi">1</span><span class="w">            </span><span class="mf">13.0</span>
+
+<span class="n">Top</span><span class="w"> </span><span class="n">Experienced</span><span class="w"> </span><span class="n">Employee</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="n">Department</span><span class="p">:</span>
+<span class="w">    </span><span class="n">department</span><span class="w">     </span><span class="n">name</span><span class="w">  </span><span class="n">experience_yrs</span><span class="w">  </span><span class="n">salary</span>
+<span class="mi">3</span><span class="w">           </span><span class="n">HR</span><span class="w">  </span><span class="n">Charlie</span><span class="w">              </span><span class="mi">13</span><span class="w">   </span><span class="mi">60000</span>
+<span class="mi">5</span><span class="w">  </span><span class="n">Engineering</span><span class="w">    </span><span class="n">Alice</span><span class="w">              </span><span class="mi">10</span><span class="w">   </span><span class="mi">90000</span>
+<span class="mi">4</span><span class="w">      </span><span class="n">Finance</span><span class="w">      </span><span class="n">Eva</span><span class="w">               </span><span class="mi">7</span><span class="w">   </span><span class="mi">58000</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="c1"># Employee DataFrame</span>
+<span class="n">df_emp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;emp_id&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1001</span><span class="p">,</span> <span class="mi">1031</span><span class="p">),</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Emp</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">)],</span>
+    <span class="s1">&#39;department&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;HR&#39;</span><span class="p">,</span> <span class="s1">&#39;Finance&#39;</span><span class="p">,</span> <span class="s1">&#39;Engineering&#39;</span><span class="p">,</span> <span class="s1">&#39;Sales&#39;</span><span class="p">],</span> <span class="mi">30</span><span class="p">),</span>
+    <span class="s1">&#39;join_date&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">&#39;2010-01-01&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;180D&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;salary&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="mi">120000</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
+    <span class="s1">&#39;monthly_sales&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="c1"># Project DataFrame</span>
+<span class="n">df_proj</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;project_id&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">201</span><span class="p">,</span> <span class="mi">211</span><span class="p">),</span>
+    <span class="s1">&#39;project_name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Proj</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)],</span>
+    <span class="s1">&#39;assigned_to&#39;</span><span class="p">:</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;emp_id&#39;</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)],</span>
+    <span class="s1">&#39;deadline&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">&#39;2025-01-01&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;30D&#39;</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="c1"># Enrichment</span>
+<span class="n">today</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">())</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;experience_years&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">today</span> <span class="o">-</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;join_date&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">days</span> <span class="o">//</span> <span class="mi">365</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;tax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.18</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;net_salary&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;tax&#39;</span><span class="p">]</span>
+
+<span class="c1"># Bonus and performance</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">calc_bonus</span><span class="p">(</span><span class="n">s</span><span class="p">):</span> <span class="k">return</span> <span class="mf">0.1</span> <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;=</span> <span class="mi">9000</span> <span class="k">else</span> <span class="mf">0.08</span> <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;=</span> <span class="mi">7000</span> <span class="k">else</span> <span class="mf">0.05</span> <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;=</span> <span class="mi">5000</span> <span class="k">else</span> <span class="mf">0.03</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;bonus_percent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;monthly_sales&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">calc_bonus</span><span class="p">)</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;bonus_percent&#39;</span><span class="p">]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">perf</span><span class="p">(</span><span class="n">s</span><span class="p">):</span> <span class="k">return</span> <span class="s1">&#39;Excellent&#39;</span> <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;=</span> <span class="mi">9500</span> <span class="k">else</span> <span class="s1">&#39;Good&#39;</span> <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;=</span> <span class="mi">7000</span> <span class="k">else</span> <span class="s1">&#39;Average&#39;</span> <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;=</span> <span class="mi">5000</span> <span class="k">else</span> <span class="s1">&#39;Low&#39;</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;performance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;monthly_sales&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">perf</span><span class="p">)</span>
+
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;annual_total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;net_salary&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="mi">12</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">grade</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;performance&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Excellent&#39;</span> <span class="ow">and</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;experience_years&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span> <span class="k">return</span> <span class="s1">&#39;A+&#39;</span>
+    <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;performance&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Good&#39;</span><span class="p">:</span> <span class="k">return</span> <span class="s1">&#39;A&#39;</span>
+    <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;performance&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Average&#39;</span><span class="p">:</span> <span class="k">return</span> <span class="s1">&#39;B&#39;</span>
+    <span class="k">return</span> <span class="s1">&#39;C&#39;</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;grade&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">grade</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">df_summary</span> <span class="o">=</span> <span class="n">df_emp</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">avg_salary</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;salary&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">),</span>
+    <span class="n">max_bonus</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">),</span>
+    <span class="n">avg_exp</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;experience_years&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">),</span>
+    <span class="n">perf_score</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;performance&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="s1">&#39;Excellent&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;exp_category&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;experience_years&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Junior&#39;</span><span class="p">,</span> <span class="s1">&#39;Mid&#39;</span><span class="p">,</span> <span class="s1">&#39;Senior&#39;</span><span class="p">,</span> <span class="s1">&#39;Veteran&#39;</span><span class="p">])</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;promotion_eligible&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;experience_years&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;performance&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;Excellent&#39;</span><span class="p">,</span> <span class="s1">&#39;Good&#39;</span><span class="p">]))</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;tax_saved&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.3</span>
+
+<span class="n">df_masked</span> <span class="o">=</span> <span class="n">df_emp</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_masked</span><span class="p">[</span><span class="s1">&#39;tax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;****&#39;</span>
+
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;salary_lakh&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1e5</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;net_salary_lakh&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;net_salary&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1e5</span>
+
+<span class="n">df_rank</span> <span class="o">=</span> <span class="n">df_emp</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">)[</span><span class="s1">&#39;monthly_sales&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df_rank</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="s1">&#39;dept_rank&#39;</span><span class="p">]</span>
+<span class="n">df_emp</span> <span class="o">=</span> <span class="n">df_emp</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_rank</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;salary_bucket&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">60000</span><span class="p">,</span> <span class="mi">80000</span><span class="p">,</span> <span class="mi">100000</span><span class="p">,</span> <span class="mi">150000</span><span class="p">],</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&lt;60K&#39;</span><span class="p">,</span> <span class="s1">&#39;60-80K&#39;</span><span class="p">,</span> <span class="s1">&#39;80-100K&#39;</span><span class="p">,</span> <span class="s1">&#39;100K+&#39;</span><span class="p">])</span>
+
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;new_salary&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;promotion_eligible&#39;</span><span class="p">],</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">])</span>
+<span class="n">score_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Excellent&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Good&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Average&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Low&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;perf_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;performance&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">score_map</span><span class="p">)</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;sales_z&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;monthly_sales&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;monthly_sales&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;monthly_sales&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+<span class="n">project_exp</span> <span class="o">=</span> <span class="n">df_proj</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="s1">&#39;assigned_to&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;assigned_to&#39;</span><span class="p">:</span> <span class="s1">&#39;emp_id&#39;</span><span class="p">})</span>
+<span class="n">df_merged</span> <span class="o">=</span> <span class="n">project_exp</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_emp</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;emp_id&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+
+<span class="n">df_merged</span><span class="p">[</span><span class="s1">&#39;days_to_deadline&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_merged</span><span class="p">[</span><span class="s1">&#39;deadline&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">today</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">days</span>
+<span class="n">df_merged</span><span class="p">[</span><span class="s1">&#39;proj_bonus_share&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_merged</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;project_id&#39;</span><span class="p">)[</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span>
+
+<span class="n">df_dept_perf</span> <span class="o">=</span> <span class="n">df_merged</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="s1">&#39;project_name&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">avg_perf_score</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;perf_score&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">),</span>
+    <span class="n">total_proj_bonus</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;proj_bonus_share&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">df_eng</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;department&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Engineering&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_fin</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;department&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Finance&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_hr</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;department&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_sales</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;department&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Sales&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">df_eng</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;bench_status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df_eng</span><span class="p">[</span><span class="s1">&#39;monthly_sales&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">4000</span><span class="p">,</span> <span class="s1">&#39;Bench&#39;</span><span class="p">,</span> <span class="s1">&#39;Active&#39;</span><span class="p">)</span>
+<span class="n">df_fin</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;risk&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df_fin</span><span class="p">[</span><span class="s1">&#39;experience_years&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="s1">&#39;Normal&#39;</span><span class="p">)</span>
+
+<span class="n">df_combined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_eng</span><span class="p">,</span> <span class="n">df_fin</span><span class="p">,</span> <span class="n">df_hr</span><span class="p">,</span> <span class="n">df_sales</span><span class="p">])</span>
+<span class="n">df_combined</span><span class="p">[</span><span class="s1">&#39;normalized_bonus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_combined</span><span class="p">[</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_combined</span><span class="p">[</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">df_combined</span><span class="p">[</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">df_combined</span><span class="p">[</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+
+<span class="n">df_top_perf</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;performance&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Excellent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;monthly_sales&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">df_low_perf</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;performance&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Low&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;monthly_sales&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">df_proj_perf</span> <span class="o">=</span> <span class="n">df_merged</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;project_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">avg_sales</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;monthly_sales&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">),</span>
+    <span class="n">total_employees</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;emp_id&#39;</span><span class="p">,</span> <span class="s1">&#39;nunique&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;salary_growth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;new_salary&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;effective_tax_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;tax&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;bonus_efficiency&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;monthly_sales&#39;</span><span class="p">]</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;net_to_gross_ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;net_salary&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span>
+
+<span class="n">df_perf_deviation</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[[</span><span class="s1">&#39;emp_id&#39;</span><span class="p">,</span> <span class="s1">&#39;monthly_sales&#39;</span><span class="p">,</span> <span class="s1">&#39;sales_z&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;sales_z&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df_bonus_outliers</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()]</span>
+<span class="n">df_tax_outliers</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;tax&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;tax&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;tax&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()]</span>
+<span class="n">df_exp_leaders</span> <span class="o">=</span> <span class="n">df_emp</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;experience_years&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">df_newcomers</span> <span class="o">=</span> <span class="n">df_emp</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;join_date&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">df_veterans</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;experience_years&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">]</span>
+
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;efficiency_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;net_salary&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;experience_years&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;bonus_percent&#39;</span><span class="p">]</span>
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;team_fit_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;grade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;A+&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">]),</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">df_pivot_perf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">df_emp</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;grade&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;salary&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df_pivot_bonus</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">df_emp</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">&#39;exp_category&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;performance&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">df_proj_long</span> <span class="o">=</span> <span class="n">df_proj</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="s1">&#39;assigned_to&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;assigned_to&#39;</span><span class="p">:</span> <span class="s1">&#39;emp_id&#39;</span><span class="p">})</span>
+<span class="n">df_proj_long</span> <span class="o">=</span> <span class="n">df_proj_long</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_emp</span><span class="p">[[</span><span class="s1">&#39;emp_id&#39;</span><span class="p">,</span> <span class="s1">&#39;salary&#39;</span><span class="p">]],</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;emp_id&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">df_proj_long</span><span class="p">[</span><span class="s1">&#39;share_salary&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_proj_long</span><span class="p">[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_proj_long</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;project_id&#39;</span><span class="p">)[</span><span class="s1">&#39;salary&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span>
+
+<span class="n">df_final_export</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[[</span><span class="s1">&#39;emp_id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="s1">&#39;grade&#39;</span><span class="p">,</span> <span class="s1">&#39;performance&#39;</span><span class="p">,</span> <span class="s1">&#39;monthly_bonus&#39;</span><span class="p">,</span> <span class="s1">&#39;new_salary&#39;</span><span class="p">,</span> <span class="s1">&#39;promotion_eligible&#39;</span><span class="p">]]</span>
+<span class="n">df_export_summary</span> <span class="o">=</span> <span class="n">df_emp</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">)[[</span><span class="s1">&#39;salary&#39;</span><span class="p">,</span> <span class="s1">&#39;monthly_bonus&#39;</span><span class="p">,</span> <span class="s1">&#39;net_salary&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">df_stat</span> <span class="o">=</span> <span class="n">df_emp</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<span class="n">df_exp_group</span> <span class="o">=</span> <span class="n">df_emp</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;exp_category&#39;</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="kc">False</span><span class="p">)[[</span><span class="s1">&#39;salary&#39;</span><span class="p">,</span> <span class="s1">&#39;monthly_bonus&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df_ranked</span> <span class="o">=</span> <span class="n">df_emp</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;perf_score&#39;</span><span class="p">,</span> <span class="s1">&#39;experience_years&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+<span class="n">df_department_max_bonus</span> <span class="o">=</span> <span class="n">df_emp</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">)[</span><span class="s1">&#39;monthly_bonus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df_top10_salary</span> <span class="o">=</span> <span class="n">df_emp</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;salary&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">df_bottom10_salary</span> <span class="o">=</span> <span class="n">df_emp</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;salary&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;relative_perf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;perf_score&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;experience_years&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">df_proj_assignments</span> <span class="o">=</span> <span class="n">df_proj_long</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;emp_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">total_projects</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;project_id&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df_merged_final</span> <span class="o">=</span> <span class="n">df_emp</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_proj_assignments</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;emp_id&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">df_merged_final</span><span class="p">[</span><span class="s1">&#39;total_projects&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_merged_final</span><span class="p">[</span><span class="s1">&#39;total_projects&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;loyalty_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;experience_years&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_emp</span><span class="p">[</span><span class="s1">&#39;department&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">df_emp</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;department&#39;</span><span class="p">)[</span><span class="s1">&#39;experience_years&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Final Employee Data Sample:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_emp</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Department Summary:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_summary</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Top 5 Performers:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_top_perf</span><span class="p">[[</span><span class="s1">&#39;emp_id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;monthly_sales&#39;</span><span class="p">,</span> <span class="s1">&#39;performance&#39;</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Newcomers (Recently Joined):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_newcomers</span><span class="p">[[</span><span class="s1">&#39;emp_id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;join_date&#39;</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Max Monthly Bonus by Department:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_department_max_bonus</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Employee Stats Description:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_stat</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Bottom 5 Performers (Low):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_low_perf</span><span class="p">[[</span><span class="s1">&#39;emp_id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;monthly_sales&#39;</span><span class="p">,</span> <span class="s1">&#39;performance&#39;</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Project Performance Summary:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_proj_perf</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Experience Group Summary:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_exp_group</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Final Employee Data Sample:
+   emp_id  name   department  join_date  salary  monthly_sales  \
+0    1001  Emp1        Sales 2010-01-01   79408           9961   
+1    1002  Emp2           HR 2010-06-30  110847           8478   
+2    1003  Emp3      Finance 2010-12-27   55721           9216   
+3    1004  Emp4           HR 2011-06-25   84660           8227   
+4    1005  Emp5  Engineering 2011-12-22  101856           6356
+
+   experience_years       tax  net_salary  bonus_percent  ...  perf_score  \
+0                15  14293.44    65114.56           0.10  ...           3   
+1                15  19952.46    90894.54           0.08  ...           2   
+2                14  10029.78    45691.22           0.10  ...           2   
+3                14  15238.80    69421.20           0.08  ...           2   
+4                13  18334.08    83521.92           0.05  ...           1
+
+    sales_z  salary_growth effective_tax_rate bonus_efficiency  \
+0  2.041904         7940.8               0.18         0.797189   
+1  1.268971        11084.7               0.18         1.045973   
+2  1.653613         5572.1               0.18         0.604612   
+3  1.138151         8466.0               0.18         0.823241   
+4  0.162995            0.0               0.18         0.801259
+
+   net_to_gross_ratio  efficiency_score  team_fit_score  relative_perf  \
+0                0.82        406.966000             1.0       0.200000   
+1                0.82        454.472700             1.0       0.133333   
+2                0.82        304.608133             1.0       0.142857   
+3                0.82        370.246400             1.0       0.142857   
+4                0.82        298.292571             0.5       0.076923
+
+   loyalty_index  
+0       1.849315  
+1       1.849315  
+2       1.666667  
+3       1.726027  
+4       1.750000
+
+[5 rows x 32 columns]
+
+Department Summary:
+    department    avg_salary  max_bonus   avg_exp  perf_score
+0  Engineering  83046.857143    7752.80  7.428571           2
+1      Finance  72508.000000    5572.10  8.400000           0
+2           HR  86317.555556    8867.76  8.111111           0
+3        Sales  86086.222222    7940.80  8.111111           1
+
+Top 5 Performers:
+    emp_id   name  monthly_sales performance
+0     1001   Emp1           9961   Excellent
+10    1011  Emp11           9908   Excellent
+14    1015  Emp15           9589   Excellent
+
+Newcomers (Recently Joined):
+    emp_id   name  join_date
+29    1030  Emp30 2024-04-17
+28    1029  Emp29 2023-10-20
+27    1028  Emp28 2023-04-23
+26    1027  Emp27 2022-10-25
+25    1026  Emp26 2022-04-28
+
+Max Monthly Bonus by Department:
+    department  monthly_bonus
+0  Engineering        7752.80
+1      Finance        5572.10
+2           HR        8867.76
+3        Sales        7940.80
+
+Employee Stats Description:
+            emp_id            join_date         salary  monthly_sales  \
+count    30.000000                   30      30.000000      30.000000   
+mean   1015.500000  2017-02-23 00:00:00   83183.400000    6043.266667   
+min    1001.000000  2010-01-01 00:00:00   54449.000000    3577.000000   
+25%    1008.250000  2013-07-29 00:00:00   69237.750000    4554.500000   
+50%    1015.500000  2017-02-23 00:00:00   84854.500000    5897.000000   
+75%    1022.750000  2020-09-20 00:00:00   93228.500000    6696.250000   
+max    1030.000000  2024-04-17 00:00:00  113569.000000    9961.000000   
+std       8.803408                  NaN   17923.305573    1918.667155
+
+       experience_years           tax   net_salary  bonus_percent  \
+count         30.000000     30.000000     30.00000      30.000000   
+mean           8.000000  14973.012000  68210.38800       0.052333   
+min            1.000000   9800.820000  44648.18000       0.030000   
+25%            4.250000  12462.795000  56774.95500       0.030000   
+50%            8.000000  15273.810000  69580.69000       0.050000   
+75%           11.750000  16781.130000  76447.37000       0.050000   
+max           15.000000  20442.420000  93126.58000       0.100000   
+std            4.394354   3226.195003  14697.11057       0.024167
+
+       monthly_bonus  annual_total  ...  dept_rank     new_salary  perf_score  \
+count      30.000000  3.000000e+01  ...  30.000000      30.000000   30.000000   
+mean     4320.721667  8.703733e+05  ...   2.666667   84784.186667    0.966667   
+min      1735.470000  5.684476e+05  ...   1.000000   54449.000000    0.000000   
+25%      2751.517500  7.062251e+05  ...   2.000000   69237.750000    0.000000   
+50%      3554.600000  9.011198e+05  ...   3.000000   87755.400000    1.000000   
+75%      5556.537500  9.544479e+05  ...   4.000000   93289.500000    1.000000   
+max      8867.760000  1.197148e+06  ...   4.000000  121931.700000    3.000000   
+std      2061.872362  1.872966e+05  ...   1.154701   18255.231495    0.964305
+
+            sales_z  salary_growth  effective_tax_rate  bonus_efficiency  \
+count  3.000000e+01      30.000000        3.000000e+01         30.000000   
+mean   1.202742e-16    1600.786667        1.800000e-01          0.695374   
+min   -1.285406e+00       0.000000        1.800000e-01          0.427559   
+25%   -7.759380e-01       0.000000        1.800000e-01          0.539667   
+50%   -7.623348e-02       0.000000        1.800000e-01          0.672981   
+75%    3.403317e-01       0.000000        1.800000e-01          0.800241   
+max    2.041904e+00   11084.700000        1.800000e-01          1.056824   
+std    1.000000e+00    3341.600041        2.775558e-17          0.188540
+
+       net_to_gross_ratio  efficiency_score  team_fit_score  
+count        3.000000e+01         30.000000       30.000000  
+mean         8.200000e-01        521.664180        0.616667  
+min          8.200000e-01        166.211071        0.500000  
+25%          8.200000e-01        255.058950        0.500000  
+50%          8.200000e-01        379.230183        0.500000  
+75%          8.200000e-01        587.154850        0.500000  
+max          8.200000e-01       2259.038500        1.000000  
+std          8.246530e-17        451.629510        0.215092
+
+[8 rows x 23 columns]
+
+Bottom 5 Performers (Low):
+    emp_id   name  monthly_sales performance
+24    1025  Emp25           3577         Low
+20    1021  Emp21           3725         Low
+7     1008   Emp8           3733         Low
+18    1019  Emp19           3910         Low
+26    1027  Emp27           4010         Low
+19    1020  Emp20           4212         Low
+6     1007   Emp7           4291         Low
+15    1016  Emp16           4485         Low
+27    1028  Emp28           4763         Low
+16    1017  Emp17           4794         Low
+
+Project Performance Summary:
+   project_id    avg_sales  total_employees
+0         201  6093.500000                4
+1         202  5978.333333                3
+2         203  7732.750000                4
+3         204  7503.000000                2
+4         205  6583.000000                3
+5         206  5374.000000                4
+6         207  6820.000000                5
+7         208  5728.333333                3
+8         209  4523.750000                4
+9         210  6219.333333                3
+
+Experience Group Summary:
+  exp_category        salary  monthly_bonus
+0       Junior  81796.333333     3771.06500
+1          Mid  86197.333333     3235.45000
+2       Senior  78405.875000     4454.57375
+3      Veteran  86029.300000     5194.59700
+</code></pre></div>
+
 <div class="highlight"><pre><span></span><code>
 </code></pre></div>
 
 <hr>
-<p><strong>Score: 20</strong></p>
+<p><strong>Score: 35</strong></p>
 <p class="subheader">Category: <a href="https://Stefina-11.github.io/pynotes/category/basics.html">basics</a>
 
 </p>
