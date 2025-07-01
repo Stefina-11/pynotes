@@ -1,0 +1,3 @@
+Hello, Stefina!
+This is a sample file created by Python.
+Welcome to file handling!
