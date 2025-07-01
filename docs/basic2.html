@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Basic2</title>
+
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/normalize.css" />
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/style.css" />
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/pygments.css" />	
+    <script src="https://Stefina-11.github.io/pynotes/theme/js/modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="https://Stefina-11.github.io/pynotes">My Python Notes</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="https://Stefina-11.github.io/pynotes/basic2.html" rel="bookmark"
+        title="Permalink to Basic2">Basic2</a></h3>
+    </header>
+
+<h6 class="subheader" title="2025-07-01T00:00:00-04:00">Tue 01 July 2025
+</h6>
+
+
+    <div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter a number: &quot;</span><span class="p">))</span>
+<span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="nb">sum</span> <span class="o">+=</span> <span class="n">i</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum:&quot;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter a number:  2
+
+
+Sum: 3
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter a number: &quot;</span><span class="p">))</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">n</span> <span class="o">//=</span> <span class="mi">10</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Digit count:&quot;</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter a number:  4
+
+
+Digit count: 1
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter a number: &quot;</span><span class="p">))</span>
+<span class="n">rev</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">rev</span> <span class="o">=</span> <span class="n">rev</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">10</span>
+    <span class="n">n</span> <span class="o">//=</span> <span class="mi">10</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reversed number:&quot;</span><span class="p">,</span> <span class="n">rev</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter a number:  20
+
+
+Reversed number: 2
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter a number: &quot;</span><span class="p">))</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">n</span>
+<span class="n">rev</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">rev</span> <span class="o">=</span> <span class="n">rev</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">10</span>
+    <span class="n">n</span> <span class="o">//=</span> <span class="mi">10</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Palindrome&quot;</span> <span class="k">if</span> <span class="n">temp</span> <span class="o">==</span> <span class="n">rev</span> <span class="k">else</span> <span class="s2">&quot;Not Palindrome&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter a number:  2
+
+
+Palindrome
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Start: &quot;</span><span class="p">))</span>
+<span class="n">end</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;End: &quot;</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">num</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">Start</span><span class="o">:</span><span class="w">  </span><span class="mi">2</span>
+<span class="n">End</span><span class="o">:</span><span class="w">  </span><span class="mi">5</span>
+
+
+<span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">5</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter number: &quot;</span><span class="p">))</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">n</span>
+<span class="n">digits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">digit</span> <span class="o">=</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">10</span>
+    <span class="nb">sum</span> <span class="o">+=</span> <span class="n">digit</span> <span class="o">**</span> <span class="n">digits</span>
+    <span class="n">n</span> <span class="o">//=</span> <span class="mi">10</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Armstrong&quot;</span> <span class="k">if</span> <span class="nb">sum</span> <span class="o">==</span> <span class="n">temp</span> <span class="k">else</span> <span class="s2">&quot;Not Armstrong&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter number:  8
+
+
+Armstrong
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter rows: &quot;</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rows</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter rows:  5
+
+
+<span class="k">*</span>
+**
+***
+****
+*****
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">base</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Base: &quot;</span><span class="p">))</span>
+<span class="n">exp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Exponent: &quot;</span><span class="p">))</span>
+<span class="n">result</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">exp</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">*=</span> <span class="n">base</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Power:&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">Base</span><span class="o">:</span><span class="w">  </span><span class="mi">2</span>
+<span class="n">Exponent</span><span class="o">:</span><span class="w">  </span><span class="mi">2</span>
+
+
+<span class="n">Power</span><span class="o">:</span><span class="w"> </span><span class="mi">4</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter number: &quot;</span><span class="p">))</span>
+<span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">total</span> <span class="o">+=</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">10</span>
+    <span class="n">n</span> <span class="o">//=</span> <span class="mi">10</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum of digits:&quot;</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter number:  10
+
+
+Sum of digits: 1
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter first number: &quot;</span><span class="p">))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter second number: &quot;</span><span class="p">))</span>
+<span class="k">while</span> <span class="n">b</span><span class="p">:</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">%</span> <span class="n">b</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GCD:&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter first number:  40
+Enter second number:  20
+
+
+GCD: 20
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter first number: &quot;</span><span class="p">))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter second number: &quot;</span><span class="p">))</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">gcd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">y</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">%</span> <span class="n">y</span>
+    <span class="k">return</span> <span class="n">x</span>
+<span class="n">lcm</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="o">//</span> <span class="n">gcd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;LCM:&quot;</span><span class="p">,</span> <span class="n">lcm</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter first number:  15
+Enter second number:  12
+
+
+LCM: 60
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter number: &quot;</span><span class="p">))</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">n</span>
+<span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">sum</span> <span class="o">+=</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">//=</span> <span class="mi">10</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Strong number&quot;</span> <span class="k">if</span> <span class="nb">sum</span> <span class="o">==</span> <span class="n">temp</span> <span class="k">else</span> <span class="s2">&quot;Not strong number&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter number:  145
+
+
+Strong number
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter number: &quot;</span><span class="p">))</span>
+<span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">sum</span> <span class="o">+=</span> <span class="n">i</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Perfect number&quot;</span> <span class="k">if</span> <span class="nb">sum</span> <span class="o">==</span> <span class="n">n</span> <span class="k">else</span> <span class="s2">&quot;Not perfect number&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter number:  6
+
+
+Perfect number
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">char</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter a character: &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ASCII value:&quot;</span><span class="p">,</span> <span class="nb">ord</span><span class="p">(</span><span class="n">char</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter a character:  A
+
+
+ASCII value: 65
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">del</span> <span class="nb">sum</span>  
+<span class="n">text</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter text: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="n">vowels</span> <span class="o">=</span> <span class="s2">&quot;aeiou&quot;</span>
+<span class="n">count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">text</span> <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">vowels</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vowel count:&quot;</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter text:  hello world
+
+
+Vowel count: 3
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter text: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="n">vowels</span> <span class="o">=</span> <span class="s2">&quot;aeiou&quot;</span>
+<span class="n">count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">text</span> <span class="k">if</span> <span class="n">ch</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="ow">and</span> <span class="n">ch</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">vowels</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Consonant count:&quot;</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter text:  hello world
+
+
+Consonant count: 7
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter range limit: &quot;</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter range limit:  100
+
+
+15 30 45 60 75 90
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter limit: &quot;</span><span class="p">))</span>
+<span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="nb">sum</span> <span class="o">+=</span> <span class="n">i</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum of even numbers:&quot;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter limit:  50
+
+
+Sum of even numbers: 650
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter limit: &quot;</span><span class="p">))</span>
+<span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="nb">sum</span> <span class="o">+=</span> <span class="n">i</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum of odd numbers:&quot;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter limit:  25
+
+
+Sum of odd numbers: 169
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter n: &quot;</span><span class="p">))</span>
+<span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="nb">sum</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">/</span><span class="n">i</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum of series:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter n:  4
+
+
+Sum of series: 2.0833
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>
+</code></pre></div>
+
+<hr>
+<p><strong>Score: 20</strong></p>
+<p class="subheader">Category: <a href="https://Stefina-11.github.io/pynotes/category/basics.html">basics</a>
+
+</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="https://Stefina-11.github.io/pynotes/archives.html">Archives</a>
+            <li><a href="https://Stefina-11.github.io/pynotes/tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="https://Stefina-11.github.io/pynotes/category/basics.html">basics</a></li>
+            <li><a href="https://Stefina-11.github.io/pynotes/category/pandas-work.html">pandas-work</a></li>
+   
+        </ul>
+
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav">
+            <li><a href="https://github.com/Stefina-11/">GitHub</a></li>
+            <li><a href="<linkedin handle>">LinkedIn</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>My Python Notes by Stefina</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
+</body>
+</html>

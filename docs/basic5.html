@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Basic5</title>
+
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/normalize.css" />
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/style.css" />
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/pygments.css" />	
+    <script src="https://Stefina-11.github.io/pynotes/theme/js/modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="https://Stefina-11.github.io/pynotes">My Python Notes</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="https://Stefina-11.github.io/pynotes/basic5.html" rel="bookmark"
+        title="Permalink to Basic5">Basic5</a></h3>
+    </header>
+
+<h6 class="subheader" title="2025-07-01T00:00:00-04:00">Tue 01 July 2025
+</h6>
+
+
+    <div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;sample.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Hello, Stefina!</span><span class="se">\n</span><span class="s2">This is a sample file created by Python.</span><span class="se">\n</span><span class="s2">Welcome to file handling!&quot;</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;sample.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File Content:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>File Content:
+
+Hello, Stefina!
+This is a sample file created by Python.
+Welcome to file handling!
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;output.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter text to write: &quot;</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter text to write:  AI Engineer
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;output.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter text to append: &quot;</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter text to append:  passionate in Deep leaning
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;sample.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Line count:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Line count: 3
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;sample.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Word count:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Word count: 14
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;sample.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Character count:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Character count: 82
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;sample.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Longest word:&quot;</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Longest word: handling!
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;sample.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;copy.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">dest</span><span class="p">:</span>
+    <span class="n">dest</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;sample.txt&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File exists&quot;</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;File does not exist&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>File exists
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;newfile.txt&quot;</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File created&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File already exists&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>File created
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;oldname.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;This is the file you will rename.&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;oldname.txt&quot;</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;oldname.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;newname.txt&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File renamed&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File &#39;oldname.txt&#39; not found.&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>File renamed
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;sample.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">vowels</span> <span class="o">=</span> <span class="s2">&quot;aeiou&quot;</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">text</span> <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">vowels</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vowel count:&quot;</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Vowel count: 24
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span> <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sub</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span> <span class="k">return</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">mul</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span> <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">div</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span> <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter first number: &quot;</span><span class="p">))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter second number: &quot;</span><span class="p">))</span>
+<span class="n">op</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter operation (+, -, *, /): &quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+<span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sub</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+<span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">mul</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+<span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;/&#39;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">div</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid operator&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter first number:  20
+Enter second number:  30
+Enter operation (+, -, *, /):  /
+
+
+0.6666666666666666
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">todo</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter task (or &#39;done&#39; to exit): &quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;done&#39;</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="n">todo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Your To-Do List:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">task</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">todo</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="nv">Enter</span><span class="w"> </span><span class="nv">task</span><span class="w"> </span><span class="ss">(</span><span class="nv">or</span><span class="w"> </span><span class="s1">&#39;done&#39;</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="k">exit</span><span class="ss">)</span>:<span class="w">  </span><span class="mi">23</span>
+<span class="nv">Enter</span><span class="w"> </span><span class="nv">task</span><span class="w"> </span><span class="ss">(</span><span class="nv">or</span><span class="w"> </span><span class="s1">&#39;done&#39;</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="k">exit</span><span class="ss">)</span>:<span class="w">  </span><span class="mi">20</span>
+<span class="nv">Enter</span><span class="w"> </span><span class="nv">task</span><span class="w"> </span><span class="ss">(</span><span class="nv">or</span><span class="w"> </span><span class="s1">&#39;done&#39;</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="k">exit</span><span class="ss">)</span>:<span class="w">  </span><span class="mi">22</span>
+<span class="nv">Enter</span><span class="w"> </span><span class="nv">task</span><span class="w"> </span><span class="ss">(</span><span class="nv">or</span><span class="w"> </span><span class="s1">&#39;done&#39;</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="k">exit</span><span class="ss">)</span>:<span class="w">  </span><span class="nv">done</span>
+
+
+<span class="nv">Your</span><span class="w"> </span><span class="nv">To</span><span class="o">-</span><span class="k">Do</span><span class="w"> </span><span class="nv">List</span>:
+<span class="mi">1</span>.<span class="w"> </span><span class="mi">23</span>
+<span class="mi">2</span>.<span class="w"> </span><span class="mi">20</span>
+<span class="mi">3</span>.<span class="w"> </span><span class="mi">22</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;numbers.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;10 20 30 40&quot;</span><span class="p">)</span>  
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;numbers.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">numbers</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum:&quot;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">numbers</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">Sum</span><span class="o">:</span><span class="w"> </span><span class="mi">100</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;numbers.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;5 15 25 35&quot;</span><span class="p">)</span> 
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;numbers.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">numbers</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum:&quot;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">numbers</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: &#39;numbers.txt&#39; file not found.&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: The file contains non-integer values.&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">Sum</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">keyword</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;sample.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">keyword</span><span class="o">.</span><span class="n">kwlist</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Keyword count:&quot;</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Keyword count: 1
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+
+<span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;hangman&quot;</span><span class="p">,</span> <span class="s2">&quot;code&quot;</span><span class="p">]</span>
+<span class="n">word</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="n">guesses</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">turns</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="k">while</span> <span class="n">turns</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">failed</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">guesses</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="n">failed</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">failed</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You Win!&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="n">guess</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Guess a letter: &quot;</span><span class="p">)</span>
+    <span class="n">guesses</span> <span class="o">+=</span> <span class="n">guess</span>
+    <span class="k">if</span> <span class="n">guess</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+        <span class="n">turns</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wrong! Attempts left:&quot;</span><span class="p">,</span> <span class="n">turns</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">turns</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You Lose! Word was:&quot;</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>_ <span class="ge">_ _</span> _ <span class="ge">_ _</span> _
+
+
+Guess a letter:  c
+
+
+Wrong! Attempts left: 5
+<span class="ge">_ _</span> _ <span class="ge">_ _</span> _ <span class="ge">_</span>
+
+
+<span class="ge">Guess a letter:  p</span>
+
+
+<span class="ge">Wrong! Attempts left: 4</span>
+<span class="ge">_</span> _ <span class="ge">_ _</span> _ <span class="ge">_ _</span>
+
+
+Guess a letter:  g
+
+
+<span class="ge">_ _</span> _ g <span class="ge">_ _</span> _
+
+
+Guess a letter:  h
+
+
+Wrong! Attempts left: 3
+h <span class="ge">_ _</span> g <span class="ge">_ _</span> _
+
+
+Guess a letter:  a
+
+
+h a <span class="ge">_ g _</span> a <span class="ge">_</span>
+
+
+<span class="ge">Guess a letter:  n</span>
+
+
+<span class="ge">h a n g _</span> a n
+
+
+Guess a letter:  m
+
+
+h a n g m a n 
+You Win!
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+
+<span class="n">num</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">guess</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Guess the number (1-100): &quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">guess</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Too low!&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">guess</span> <span class="o">&gt;</span> <span class="n">num</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Too high!&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Correct! You guessed it.&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Guess the number (1-100):  50
+
+
+Too low!
+
+
+Guess the number (1-100):  60
+
+
+Too low!
+
+
+Guess the number (1-100):  70
+
+
+Too low!
+
+
+Guess the number (1-100):  80
+
+
+Too low!
+
+
+Guess the number (1-100):  90
+
+
+Too high!
+
+
+Guess the number (1-100):  85
+
+
+Too high!
+
+
+Guess the number (1-100):  81
+
+
+Too low!
+
+
+Guess the number (1-100):  82
+
+
+Too low!
+
+
+Guess the number (1-100):  83
+
+
+Too low!
+
+
+Guess the number (1-100):  84
+
+
+Correct! You guessed it.
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+
+<span class="n">choices</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rock&#39;</span><span class="p">,</span> <span class="s1">&#39;paper&#39;</span><span class="p">,</span> <span class="s1">&#39;scissors&#39;</span><span class="p">]</span>
+<span class="n">player</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Choose rock, paper or scissors: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="n">computer</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">choices</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computer chose:&quot;</span><span class="p">,</span> <span class="n">computer</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">player</span> <span class="o">==</span> <span class="n">computer</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;It&#39;s a tie!&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="p">(</span><span class="n">player</span> <span class="o">==</span> <span class="s1">&#39;rock&#39;</span> <span class="ow">and</span> <span class="n">computer</span> <span class="o">==</span> <span class="s1">&#39;scissors&#39;</span><span class="p">)</span> <span class="ow">or</span> \
+     <span class="p">(</span><span class="n">player</span> <span class="o">==</span> <span class="s1">&#39;scissors&#39;</span> <span class="ow">and</span> <span class="n">computer</span> <span class="o">==</span> <span class="s1">&#39;paper&#39;</span><span class="p">)</span> <span class="ow">or</span> \
+     <span class="p">(</span><span class="n">player</span> <span class="o">==</span> <span class="s1">&#39;paper&#39;</span> <span class="ow">and</span> <span class="n">computer</span> <span class="o">==</span> <span class="s1">&#39;rock&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You win!&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You lose!&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Choose rock, paper or scissors:  paper
+
+
+Computer chose: rock
+You win!
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>
+</code></pre></div>
+
+<hr>
+<p><strong>Score: 20</strong></p>
+<p class="subheader">Category: <a href="https://Stefina-11.github.io/pynotes/category/basics.html">basics</a>
+
+</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="https://Stefina-11.github.io/pynotes/archives.html">Archives</a>
+            <li><a href="https://Stefina-11.github.io/pynotes/tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="https://Stefina-11.github.io/pynotes/category/basics.html">basics</a></li>
+            <li><a href="https://Stefina-11.github.io/pynotes/category/pandas-work.html">pandas-work</a></li>
+   
+        </ul>
+
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav">
+            <li><a href="https://github.com/Stefina-11/">GitHub</a></li>
+            <li><a href="<linkedin handle>">LinkedIn</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>My Python Notes by Stefina</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
+</body>
+</html>

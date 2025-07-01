@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Basic4</title>
+
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/normalize.css" />
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/style.css" />
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/pygments.css" />	
+    <script src="https://Stefina-11.github.io/pynotes/theme/js/modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="https://Stefina-11.github.io/pynotes">My Python Notes</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="https://Stefina-11.github.io/pynotes/basic4.html" rel="bookmark"
+        title="Permalink to Basic4">Basic4</a></h3>
+    </header>
+
+<h6 class="subheader" title="2025-07-01T00:00:00-04:00">Tue 01 July 2025
+</h6>
+
+
+    <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_anagram</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">str1</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">str2</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Anagram&quot;</span> <span class="k">if</span> <span class="n">is_anagram</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;First string: &quot;</span><span class="p">),</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Second string: &quot;</span><span class="p">))</span> <span class="k">else</span> <span class="s2">&quot;Not Anagram&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>First string:  listen
+Second string:  silent
+
+
+Anagram
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">is_pangram</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">ch</span> <span class="ow">in</span> <span class="n">s</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pangram&quot;</span> <span class="k">if</span> <span class="n">is_pangram</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter sentence: &quot;</span><span class="p">))</span> <span class="k">else</span> <span class="s2">&quot;Not Pangram&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter sentence:  The quick brown fox jumps over the lazy dog
+
+
+Pangram
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">s</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter string: &quot;</span><span class="p">)</span>
+<span class="n">vowels</span> <span class="o">=</span> <span class="s2">&quot;aeiouAEIOU&quot;</span>
+<span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;*&#39;</span> <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">vowels</span> <span class="k">else</span> <span class="n">ch</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Modified string:&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter string:  stefina
+
+
+Modified string: st*f*n*
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">s</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter string: &quot;</span><span class="p">)</span>
+<span class="n">freq</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+    <span class="n">freq</span><span class="p">[</span><span class="n">ch</span><span class="p">]</span> <span class="o">=</span> <span class="n">freq</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter string:  hey there
+
+
+{&#39;h&#39;: 2, &#39;e&#39;: 3, &#39;y&#39;: 1, &#39; &#39;: 1, &#39;t&#39;: 1, &#39;r&#39;: 1}
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">s</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter string: &quot;</span><span class="p">)</span>
+<span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="n">duplicates</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+        <span class="n">duplicates</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Duplicates:&quot;</span><span class="p">,</span> <span class="n">duplicates</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter string:  happy
+
+
+Duplicates: {&#39;p&#39;}
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">s</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter sentence: &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Capitalized:&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">title</span><span class="p">())</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter sentence:  apple
+
+
+Capitalized: Apple
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">words</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter sentence: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">words</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sorted words:&quot;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter sentence:  how are you
+
+
+Sorted words: are how you
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter text: &quot;</span><span class="p">)</span>
+<span class="n">clean</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ch</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">s</span> <span class="k">if</span> <span class="n">ch</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cleaned:&quot;</span><span class="p">,</span> <span class="n">clean</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter text:  what&#39;s up!
+
+
+Cleaned: whats up
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">s</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter string: &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Without spaces:&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter string:  h e l l o
+
+
+Without spaces: hello
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">merged</span> <span class="o">=</span> <span class="n">list1</span> <span class="o">+</span> <span class="n">list2</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Merged list:&quot;</span><span class="p">,</span> <span class="n">merged</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Merged list: [1, 2, 3, 4, 5]
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">lst</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter numbers: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum:&quot;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">lst</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Min:&quot;</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">lst</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Max:&quot;</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">lst</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter numbers:  1 2 3
+
+
+Sum: 6
+Min: 1
+Max: 3
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">lst</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter numbers: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="n">unique</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">lst</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Without duplicates:&quot;</span><span class="p">,</span> <span class="n">unique</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter numbers:  1 2 3 2 4 5 5 6
+
+
+Without duplicates: [1, 2, 3, 4, 5, 6]
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">lst</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter list: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reversed:&quot;</span><span class="p">,</span> <span class="n">lst</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter list:  1 2 3
+
+
+Reversed: [3, 2, 1]
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">lst</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter numbers: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="n">unique</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">lst</span><span class="p">))</span>
+<span class="n">unique</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Second largest:&quot;</span><span class="p">,</span> <span class="n">unique</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Not enough unique elements&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter numbers:  1 2 3 4
+
+
+Second largest: 3
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">lst</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter list: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter number to count: &quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2"> occurs </span><span class="si">{</span><span class="n">lst</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2"> times&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter list:  2 4 6
+Enter number to count:  4
+
+
+4 occurs 1 times
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">s</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter comma-separated values: &quot;</span><span class="p">)</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Split list:&quot;</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Enter comma-separated values:  c,l,a,s,s
+
+
+Split list: [&#39;c&#39;, &#39;l&#39;, &#39;a&#39;, &#39;s&#39;, &#39;s&#39;]
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">lst</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)]</span>
+<span class="n">lst</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sorted tuples:&quot;</span><span class="p">,</span> <span class="n">lst</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Sorted tuples: [(1, &#39;a&#39;), (2, &#39;b&#39;), (3, &#39;c&#39;)]
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;List A: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;List B: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="n">common</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Common elements:&quot;</span><span class="p">,</span> <span class="n">common</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>List A:  1 2 3 4 5
+List B:  6 7 8 3 9
+
+
+Common elements: [3]
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">nested</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">]]</span>
+<span class="n">flat</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">nested</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Flattened:&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>Flattened: [1, 2, 3, 4, 5]
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>
+</code></pre></div>
+
+<hr>
+<p><strong>Score: 20</strong></p>
+<p class="subheader">Category: <a href="https://Stefina-11.github.io/pynotes/category/basics.html">basics</a>
+
+</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="https://Stefina-11.github.io/pynotes/archives.html">Archives</a>
+            <li><a href="https://Stefina-11.github.io/pynotes/tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="https://Stefina-11.github.io/pynotes/category/basics.html">basics</a></li>
+            <li><a href="https://Stefina-11.github.io/pynotes/category/pandas-work.html">pandas-work</a></li>
+   
+        </ul>
+
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav">
+            <li><a href="https://github.com/Stefina-11/">GitHub</a></li>
+            <li><a href="<linkedin handle>">LinkedIn</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>My Python Notes by Stefina</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
+</body>
+</html>
