@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Test5</title>
+
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/normalize.css" />
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/style.css" />
+    <link rel="stylesheet" href="https://Stefina-11.github.io/pynotes/theme/css/pygments.css" />	
+    <script src="https://Stefina-11.github.io/pynotes/theme/js/modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="https://Stefina-11.github.io/pynotes">My Python Notes</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="https://Stefina-11.github.io/pynotes/test5.html" rel="bookmark"
+        title="Permalink to Test5">Test5</a></h3>
+    </header>
+
+<h6 class="subheader" title="2025-07-01T00:00:00-04:00">Tue 01 July 2025
+</h6>
+
+
+    <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bs4</span><span class="w"> </span><span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nltk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">CountVectorizer</span><span class="p">,</span> <span class="n">TfidfTransformer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultinomialNB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;stopwords&#39;</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.corpus</span><span class="w"> </span><span class="kn">import</span> <span class="n">stopwords</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://gitlab.com/rajacsp/datasets/raw/master/stack-overflow-data.csv&#39;</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">])]</span>
+
+<span class="n">REPLACE_BY_SPACE_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[/()</span><span class="si">{}</span><span class="s1">\[\]\|@,;]&#39;</span><span class="p">)</span>
+<span class="n">BAD_SYMBOLS_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[^0-9a-z #+_]&#39;</span><span class="p">)</span>
+<span class="n">STOPWORDS</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">clean_text</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">REPLACE_BY_SPACE_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">BAD_SYMBOLS_RE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">STOPWORDS</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">text</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;post&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;post&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">clean_text</span><span class="p">)</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;post&#39;</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;vect&#39;</span><span class="p">,</span> <span class="n">CountVectorizer</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;tfidf&#39;</span><span class="p">,</span> <span class="n">TfidfTransformer</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;clf&#39;</span><span class="p">,</span> <span class="n">MultinomialNB</span><span class="p">()),</span>
+<span class="p">])</span>
+
+<span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+
+<span class="n">my_tags</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;java&#39;</span><span class="p">,</span><span class="s1">&#39;html&#39;</span><span class="p">,</span><span class="s1">&#39;asp.net&#39;</span><span class="p">,</span><span class="s1">&#39;c#&#39;</span><span class="p">,</span><span class="s1">&#39;ruby-on-rails&#39;</span><span class="p">,</span><span class="s1">&#39;jquery&#39;</span><span class="p">,</span><span class="s1">&#39;mysql&#39;</span><span class="p">,</span><span class="s1">&#39;php&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ios&#39;</span><span class="p">,</span><span class="s1">&#39;javascript&#39;</span><span class="p">,</span><span class="s1">&#39;python&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;css&#39;</span><span class="p">,</span><span class="s1">&#39;android&#39;</span><span class="p">,</span><span class="s1">&#39;iphone&#39;</span><span class="p">,</span><span class="s1">&#39;sql&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;objective-c&#39;</span><span class="p">,</span><span class="s1">&#39;c++&#39;</span><span class="p">,</span><span class="s1">&#39;angularjs&#39;</span><span class="p">,</span><span class="s1">&#39;.net&#39;</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="n">my_tags</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="o">[</span><span class="n">nltk_data</span><span class="o">]</span><span class="w"> </span><span class="n">Downloading</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="n">stopwords</span><span class="w"> </span><span class="k">to</span>
+<span class="o">[</span><span class="n">nltk_data</span><span class="o">]</span><span class="w">     </span><span class="nl">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">stefi</span><span class="err">\</span><span class="n">AppData</span><span class="err">\</span><span class="n">Roaming</span><span class="err">\</span><span class="n">nltk_data</span><span class="p">...</span>
+<span class="o">[</span><span class="n">nltk_data</span><span class="o">]</span><span class="w">   </span><span class="n">Package</span><span class="w"> </span><span class="n">stopwords</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">already</span><span class="w"> </span><span class="n">up</span><span class="o">-</span><span class="k">to</span><span class="o">-</span><span class="nc">date</span><span class="err">!</span>
+
+
+<span class="nl">Accuracy</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7395</span>
+
+<span class="n">Classification</span><span class="w"> </span><span class="nl">Report</span><span class="p">:</span>
+
+<span class="w">               </span><span class="k">precision</span><span class="w">    </span><span class="n">recall</span><span class="w">  </span><span class="n">f1</span><span class="o">-</span><span class="n">score</span><span class="w">   </span><span class="n">support</span>
+
+<span class="w">         </span><span class="n">java</span><span class="w">       </span><span class="mf">0.63</span><span class="w">      </span><span class="mf">0.65</span><span class="w">      </span><span class="mf">0.64</span><span class="w">       </span><span class="mi">613</span>
+<span class="w">         </span><span class="n">html</span><span class="w">       </span><span class="mf">0.94</span><span class="w">      </span><span class="mf">0.86</span><span class="w">      </span><span class="mf">0.90</span><span class="w">       </span><span class="mi">620</span>
+<span class="w">      </span><span class="n">asp</span><span class="p">.</span><span class="n">net</span><span class="w">       </span><span class="mf">0.87</span><span class="w">      </span><span class="mf">0.92</span><span class="w">      </span><span class="mf">0.90</span><span class="w">       </span><span class="mi">587</span>
+<span class="w">           </span><span class="n">c</span><span class="err">#</span><span class="w">       </span><span class="mf">0.70</span><span class="w">      </span><span class="mf">0.77</span><span class="w">      </span><span class="mf">0.73</span><span class="w">       </span><span class="mi">586</span>
+<span class="n">ruby</span><span class="o">-</span><span class="k">on</span><span class="o">-</span><span class="n">rails</span><span class="w">       </span><span class="mf">0.73</span><span class="w">      </span><span class="mf">0.87</span><span class="w">      </span><span class="mf">0.79</span><span class="w">       </span><span class="mi">599</span>
+<span class="w">       </span><span class="n">jquery</span><span class="w">       </span><span class="mf">0.72</span><span class="w">      </span><span class="mf">0.51</span><span class="w">      </span><span class="mf">0.60</span><span class="w">       </span><span class="mi">589</span>
+<span class="w">        </span><span class="n">mysql</span><span class="w">       </span><span class="mf">0.77</span><span class="w">      </span><span class="mf">0.74</span><span class="w">      </span><span class="mf">0.75</span><span class="w">       </span><span class="mi">594</span>
+<span class="w">          </span><span class="n">php</span><span class="w">       </span><span class="mf">0.69</span><span class="w">      </span><span class="mf">0.89</span><span class="w">      </span><span class="mf">0.78</span><span class="w">       </span><span class="mi">610</span>
+<span class="w">          </span><span class="n">ios</span><span class="w">       </span><span class="mf">0.63</span><span class="w">      </span><span class="mf">0.59</span><span class="w">      </span><span class="mf">0.61</span><span class="w">       </span><span class="mi">617</span>
+<span class="w">   </span><span class="n">javascript</span><span class="w">       </span><span class="mf">0.57</span><span class="w">      </span><span class="mf">0.65</span><span class="w">      </span><span class="mf">0.60</span><span class="w">       </span><span class="mi">587</span>
+<span class="w">       </span><span class="n">python</span><span class="w">       </span><span class="mf">0.70</span><span class="w">      </span><span class="mf">0.50</span><span class="w">      </span><span class="mf">0.59</span><span class="w">       </span><span class="mi">611</span>
+<span class="w">            </span><span class="n">c</span><span class="w">       </span><span class="mf">0.79</span><span class="w">      </span><span class="mf">0.79</span><span class="w">      </span><span class="mf">0.79</span><span class="w">       </span><span class="mi">594</span>
+<span class="w">          </span><span class="n">css</span><span class="w">       </span><span class="mf">0.84</span><span class="w">      </span><span class="mf">0.59</span><span class="w">      </span><span class="mf">0.69</span><span class="w">       </span><span class="mi">619</span>
+<span class="w">      </span><span class="n">android</span><span class="w">       </span><span class="mf">0.66</span><span class="w">      </span><span class="mf">0.84</span><span class="w">      </span><span class="mf">0.74</span><span class="w">       </span><span class="mi">574</span>
+<span class="w">       </span><span class="n">iphone</span><span class="w">       </span><span class="mf">0.64</span><span class="w">      </span><span class="mf">0.83</span><span class="w">      </span><span class="mf">0.72</span><span class="w">       </span><span class="mi">584</span>
+<span class="w">          </span><span class="k">sql</span><span class="w">       </span><span class="mf">0.66</span><span class="w">      </span><span class="mf">0.64</span><span class="w">      </span><span class="mf">0.65</span><span class="w">       </span><span class="mi">578</span>
+<span class="w">  </span><span class="n">objective</span><span class="o">-</span><span class="n">c</span><span class="w">       </span><span class="mf">0.79</span><span class="w">      </span><span class="mf">0.77</span><span class="w">      </span><span class="mf">0.78</span><span class="w">       </span><span class="mi">591</span>
+<span class="w">          </span><span class="n">c</span><span class="o">++</span><span class="w">       </span><span class="mf">0.89</span><span class="w">      </span><span class="mf">0.83</span><span class="w">      </span><span class="mf">0.86</span><span class="w">       </span><span class="mi">608</span>
+<span class="w">    </span><span class="n">angularjs</span><span class="w">       </span><span class="mf">0.94</span><span class="w">      </span><span class="mf">0.89</span><span class="w">      </span><span class="mf">0.91</span><span class="w">       </span><span class="mi">638</span>
+<span class="w">         </span><span class="p">.</span><span class="n">net</span><span class="w">       </span><span class="mf">0.74</span><span class="w">      </span><span class="mf">0.66</span><span class="w">      </span><span class="mf">0.70</span><span class="w">       </span><span class="mi">601</span>
+
+<span class="w">     </span><span class="n">accuracy</span><span class="w">                           </span><span class="mf">0.74</span><span class="w">     </span><span class="mi">12000</span>
+<span class="w">    </span><span class="n">macro</span><span class="w"> </span><span class="nf">avg</span><span class="w">       </span><span class="mf">0.74</span><span class="w">      </span><span class="mf">0.74</span><span class="w">      </span><span class="mf">0.74</span><span class="w">     </span><span class="mi">12000</span>
+<span class="w"> </span><span class="n">weighted</span><span class="w"> </span><span class="nf">avg</span><span class="w">       </span><span class="mf">0.75</span><span class="w">      </span><span class="mf">0.74</span><span class="w">      </span><span class="mf">0.74</span><span class="w">     </span><span class="mi">12000</span>
+
+<span class="nl">Accuracy</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7395</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>
+</code></pre></div>
+
+<hr>
+<p><strong>Score: 0</strong></p>
+<p class="subheader">Category: <a href="https://Stefina-11.github.io/pynotes/category/basics.html">basics</a>
+
+</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="https://Stefina-11.github.io/pynotes/archives.html">Archives</a>
+            <li><a href="https://Stefina-11.github.io/pynotes/tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="https://Stefina-11.github.io/pynotes/category/basics.html">basics</a></li>
+            <li><a href="https://Stefina-11.github.io/pynotes/category/pandas-work.html">pandas-work</a></li>
+   
+        </ul>
+
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav">
+            <li><a href="https://github.com/Stefina-11/">GitHub</a></li>
+            <li><a href="<linkedin handle>">LinkedIn</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>My Python Notes by Stefina</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
+</body>
+</html>
